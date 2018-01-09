@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Paper Search - Explore Whitepapers</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/search.js"></script>
+        <script type="text/javascript" src="js/search-ui.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <header>
+            <div class="navbar navbar-default">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">Paper Finder</a>
+                </div>
+                <!--                    <div class="navbar-collapse collapse navbar-responsive-collapse">
+                                        <ul class="nav navbar-nav">
+                                            <li class="active"><a href="search.html?query=:popular:">Popular</a></li>
+                                            <li><a href="index.html">Search</a></li>
+                                        </ul>
+                                    </div>-->
+            </div>
+        </header>
+        
+        <div class="main_search">
+            <form class="clear" method="get" action="search.html">
+                <input id="search" name="query" class="search" type="text" placeholder="Find Research" />
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        
+    </body>
+</html>
