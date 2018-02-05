@@ -1,4 +1,5 @@
 nbproject/
-package-lock.json
+.vscode/
 build/
-node-modules
+node-modules/
+
