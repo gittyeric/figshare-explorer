@@ -1,0 +1,114 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+/* General Rules */
+
+.clear:before,
+.clear:after {
+    content: " ";
+    display: table;
+}
+
+.clear:after {
+    clear: both;
+}
+
+ol{
+    list-style: none;
+}
+
+/* Specific Elements */
+
+/* Search */
+#search #title{
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+.main_search{
+    width: 320px;
+    margin: 40px auto;
+}
+
+.main_search form{
+    width: 320px;
+}
+
+.main_search form input, .main_search form button{
+    float: left;
+    margin-right: 5px;
+}
+
+.main_search form:after{
+    clear: both;
+}
+
+#search .pagination{
+    margin-left: 40px;
+}
+
+/* Article */
+
+p.description{
+    margin: 20px 0 10px;
+    padding: 0;
+    font-size: 16px;
+}
+
+#summary{
+    padding: 15px 1%;
+    width: 73%;
+}
+
+#this_paper{
+    float: left;
+    width: 70%;
+}
+
+#similar_papers{
+    background: #eee;
+    float: left;
+    width: 23%;
+    height: 100%;
+    min-width: 250px;
+    max-width: 400px;
+    padding: 1%;
+    margin: 20px 0 0 2%
+}
+
+.actions{
+    padding-left: 20px;
+    padding-bottom: 20px;
+}

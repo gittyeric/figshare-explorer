@@ -1,1 +1,4 @@
-/nbproject/private/
+nbproject/
+package-lock.json
+build/
+node-modules
