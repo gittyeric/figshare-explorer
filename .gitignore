@@ -1,9 +1,9 @@
 nbproject/
 .vscode/
 build/
-node-modules/
+node_modules/
 
-src/**.css
+**.css
 
 # Don't ignore bootstrap, but everything else should be scss files
 !src/app/bootstrap.css
