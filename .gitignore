@@ -3,3 +3,7 @@ nbproject/
 build/
 node-modules/
 
+src/**.css
+
+# Don't ignore bootstrap, but everything else should be scss files
+!src/app/bootstrap.css
