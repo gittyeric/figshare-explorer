@@ -39,7 +39,6 @@ export class NamedStore<S> implements Store<State> {
 
     replaceReducer(nextReducer: (state: S, action: Action) => S): void {
         throw Error('Should not call replaceReducer on NamedStore');
-        // this.mainStore.replaceReducer(nextReducer);
     }
 
 }
@@ -71,5 +70,7 @@ export function createNamedStore<S>(
         throw Error('Creating 2 stores for ' + storeName);
     }
 
-    return new NamedStore<S>(store, reducer, initState, storeName);
+    const newStore = new NamedStore<S>(store, reducer, initState, storeName);
+    namedStores[storeName] = newStore;
+    return newStore;
 }

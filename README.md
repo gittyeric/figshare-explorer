@@ -12,7 +12,7 @@ First download this project locally.  Command line would be:
 
 Now from command line, navigate to the folder and build the project:
 
- 	cd path/to/project/root/
+ 	cd path/to/project/figshare-explorer
 	npm install
 	npm run build
 

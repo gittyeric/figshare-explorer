@@ -12,7 +12,7 @@ export interface Pagable<RESULT> {
     paginate: (page: number) => Promise<Page<RESULT>>;
 }
 
-class Pagination<RESULT> extends React.Component {
+export default class Pagination<RESULT> extends React.Component {
 
     pagable: Pagable<RESULT>;
 
@@ -67,6 +67,6 @@ class Pagination<RESULT> extends React.Component {
     }
 }
 
-export default function createPagination<PAGE>(pagable: Pagable<PAGE>) {
+/*export default function createPagination<PAGE>(pagable: Pagable<PAGE>): Pagination<PAGE> {
     return new Pagination(pagable);
-}
+}*/

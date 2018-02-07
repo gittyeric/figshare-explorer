@@ -3,7 +3,7 @@ import { StatefulService } from '../stateful-service';
 import {
     SearchState, storeName, SearchAction, reducer, Result,
     QueryDone, QueryFail, Article, ArticleFail,
-    ArticleDone, QueryLoading, ArticleLoading
+    ArticleDone, QueryLoading, ArticleLoading, QueryChanged
 } from './actions';
 import { Pagable } from '../pagination/pagination-ui';
 
@@ -28,9 +28,13 @@ class SearchService extends StatefulService<SearchState, SearchAction>
     getPage = () => this.getState();
 
     paginate = (page: number) => 
-        this.find(this.getState().query as string, page)
+        this.find(page)
 
-    find = (query: string, page: number = 1) => {
+    setQuery = (query: string) => {
+        this.dispatch(QueryChanged(query));
+    }
+    
+    find = (page: number = 1) => {
         const state = this.getState();
 
         const pendingAjax = $.ajax({
@@ -39,24 +43,26 @@ class SearchService extends StatefulService<SearchState, SearchAction>
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify({
-                'search_for': query,
+                'search_for': state.query,
                 'page': page,
                 'page_size': state.pageSize
             })
         });
 
-        this.dispatch(QueryLoading(query, page));
+        this.dispatch(QueryLoading(state.query as string, page));
 
         const promisedResult = new Promise<SearchState>((resolve, reject) => {
             pendingAjax.done(
                 (results) => {
+                    // tslint:disable-next-line:no-console
+                    console.log('in find d');
                     const asResults = results as Result[];
                     this.dispatch(QueryDone(asResults));
                     resolve(this.getState());
                 })
                 .fail((e) => {
                     this.dispatch(QueryFail());
-                    reject();
+                    reject(e);
                 });
         });
 
@@ -78,9 +84,9 @@ class SearchService extends StatefulService<SearchState, SearchAction>
                     this.dispatch(ArticleDone(asArticle));
                     resolve(asArticle);
                 })
-                .fail(() => {
+                .fail((e) => {
                     this.dispatch(ArticleFail());
-                    reject();
+                    reject(e);
                 });
         });
 

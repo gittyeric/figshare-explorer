@@ -19,6 +19,14 @@ export interface SearchState extends Page<Result> {
 
 export interface Article {
     id: string;
+    title: string;
+    description: string;
+    categories: string[];
+    tags: string[];
+    authors: Author[];
+    files: File[];
+    published_date: string;
+    figshare_url: string;
 }
 
 export interface Author {
@@ -31,16 +39,18 @@ export interface File {
 }
 
 export interface Result {
-    id: String;
+    id: string;
     title: string;
     description: string;
     categories: string[];
     tags: string[];
     authors: Author[];
     files: File[];
+    published_date: string;
 }
 
 enum ActionType {
+    QueryChanged = 'QueryChanged',
     QueryLoading = 'QueryLoading',
     QueryDone = 'QueryDone',
     QueryFail = 'QueryFail',
@@ -67,6 +77,18 @@ export const QueryLoading = (query: string, page: number): QueryLoadingAction =>
         storeName: storeName,
         query: query,
         page: page
+    };
+};
+
+interface QueryChangedAction extends SearchAction {
+    query: string;
+}
+
+export const QueryChanged = (query: string): QueryChangedAction => {
+    return {
+        type: ActionType.QueryChanged,
+        storeName: storeName,
+        query: query
     };
 };
 
@@ -136,6 +158,10 @@ export const ArticleDone = (article: Article): ArticleDoneAction => {
     };
 };
 
+const queryChangedReducer = (s: SearchState, a: QueryChangedAction) => {
+    return { ...s, query: a.query };
+};
+
 const queryLoadingReducer = (s: SearchState, a: QueryLoadingAction) => {
     return { ...s, isQuerying: true, page: a.page, query: a.query };
 };
@@ -157,7 +183,7 @@ const articleLoadingReducer = (s: SearchState, a: ArticleLoadingAction) => {
 };
 
 const articleDoneReducer = (s: SearchState, a: ArticleDoneAction) => {
-    return { ...s, isFetchingArticle: false, isArticleError: false, article: a.article };
+    return { ...s, isFetchingArticle: false, isArticleError: false, curArticle: a.article };
 };
 
 const articleFailReducer = (s: SearchState) => {
@@ -166,6 +192,8 @@ const articleFailReducer = (s: SearchState) => {
 
 export const reducer: NamedReducer<SearchState> = (s: SearchState, a: NamedAction): SearchState => {
     switch (a.type) {
+        case ActionType.QueryChanged:
+            return queryChangedReducer(s, a as QueryChangedAction);
         case ActionType.QueryLoading:
             return queryLoadingReducer(s, a as QueryLoadingAction);
         case ActionType.QueryDone:
