@@ -16,8 +16,8 @@ export default class Pagination<RESULT> extends React.Component {
 
     pagable: Pagable<RESULT>;
 
-    constructor(pagable: Pagable<RESULT>) {
-        super({});
+    constructor(pagable: Pagable<RESULT>, props: {}) {
+        super(props);
         this.pagable = pagable;
     }
 
@@ -25,7 +25,7 @@ export default class Pagination<RESULT> extends React.Component {
         return (e: MouseEvent<HTMLAnchorElement>) => {
             const promisedPage = this.pagable.paginate(newPage);
             promisedPage.then((page) => {
-                this.render();
+                this.forceUpdate();
             });
             return false;
         };
@@ -45,11 +45,12 @@ export default class Pagination<RESULT> extends React.Component {
         const generatePageElements = () => {
             const pageElements: ReactElement<HTMLLIElement>[] = [];
             for (var i: number = 0; i < 5; i++) {
-                // const active = (i + firstVisible) === page.page ? 'active' : '';
+                const active = (i + firstVisible) === page.page ? ' active' : '';
                 const iPage = firstVisible + i;
+                const className = 'num' + active;
 
                 pageElements.push(
-                    <li className="num {active}">
+                    <li className={className}>
                         <a onClick={this.pageClicked(iPage)}>{iPage}</a>
                     </li>);
             }

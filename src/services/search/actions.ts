@@ -8,7 +8,8 @@ export interface SearchState extends Page<Result> {
     pageSize: number;
     isQuerying: boolean;
     isQueryError: boolean;
-    query?: string;
+    queryMatchesResults: boolean;
+    query: string;
     results?: Array<Result>;
 
     isFetchingArticle: boolean;
@@ -21,7 +22,7 @@ export interface Article {
     id: string;
     title: string;
     description: string;
-    categories: string[];
+    categories: Category[];
     tags: string[];
     authors: Author[];
     files: File[];
@@ -30,6 +31,7 @@ export interface Article {
 }
 
 export interface Author {
+    id: string;
     full_name: string;
 }
 
@@ -38,11 +40,16 @@ export interface File {
     name: string;
 }
 
+export interface Category {
+    id: string;
+    title: string;
+}
+
 export interface Result {
     id: string;
     title: string;
     description: string;
-    categories: string[];
+    categories: Category[];
     tags: string[];
     authors: Author[];
     files: File[];
@@ -159,11 +166,11 @@ export const ArticleDone = (article: Article): ArticleDoneAction => {
 };
 
 const queryChangedReducer = (s: SearchState, a: QueryChangedAction) => {
-    return { ...s, query: a.query };
+    return { ...s, query: a.query, queryMatchesResults: false };
 };
 
 const queryLoadingReducer = (s: SearchState, a: QueryLoadingAction) => {
-    return { ...s, isQuerying: true, page: a.page, query: a.query };
+    return { ...s, isQuerying: true, queryMatchesResults: true, page: a.page, query: a.query };
 };
 
 const queryDoneReducer = (s: SearchState, a: QueryDoneAction) => {

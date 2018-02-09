@@ -25,7 +25,9 @@ const HomePage: React.SFC<RouteComponentProps<any>> = () => {
 const About = () => (
   <div>
     <h2>About</h2>
-    So far, just a simple project that uses Figshare APIs and a recommendation engine to help with research visibility.
+    <p>So far, this site is mostly a demo site for the 
+      <a href="https://github.com/gittyeric/freql-recommendation-engine">FREQL Recommendation Engine</a> 
+      and also uses awesome <a href="https://docs.figshare.com">Figshare APIs</a> to help with research discovery.</p>
   </div>
 );
 

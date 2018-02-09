@@ -10,8 +10,10 @@ import { Pagable } from '../pagination/pagination-ui';
 const FIGSHARE_API = 'https://api.figshare.com/v2';
 
 const initState: SearchState = {
+    query: '',
     page: 1,
     pageSize: 50,
+    queryMatchesResults: true,
     isQuerying: false,
     isQueryError: false,
     isArticleError: false,
@@ -54,8 +56,6 @@ class SearchService extends StatefulService<SearchState, SearchAction>
         const promisedResult = new Promise<SearchState>((resolve, reject) => {
             pendingAjax.done(
                 (results) => {
-                    // tslint:disable-next-line:no-console
-                    console.log('in find d');
                     const asResults = results as Result[];
                     this.dispatch(QueryDone(asResults));
                     resolve(this.getState());

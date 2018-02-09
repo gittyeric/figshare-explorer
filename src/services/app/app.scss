@@ -49,66 +49,6 @@ ol{
     list-style: none;
 }
 
-/* Specific Elements */
-
-/* Search */
-#search #title{
-    margin-left: 20px;
-    margin-bottom: 40px;
-}
-
-.main_search{
-    width: 320px;
-    margin: 40px auto;
-}
-
-.main_search form{
-    width: 320px;
-}
-
-.main_search form input, .main_search form button{
-    float: left;
-    margin-right: 5px;
-}
-
-.main_search form:after{
-    clear: both;
-}
-
-#search .pagination{
-    margin-left: 40px;
-}
-
-/* Article */
-
-p.description{
-    margin: 20px 0 10px;
-    padding: 0;
-    font-size: 16px;
-}
-
-#summary{
-    padding: 15px 1%;
-    width: 73%;
-}
-
-#this_paper{
-    float: left;
-    width: 70%;
-}
-
-#similar_papers{
-    background: #eee;
-    float: left;
-    width: 23%;
-    height: 100%;
-    min-width: 250px;
-    max-width: 400px;
-    padding: 1%;
-    margin: 20px 0 0 2%
-}
-
-.actions{
-    padding-left: 20px;
-    padding-bottom: 20px;
+a {
+    cursor: pointer;
 }
