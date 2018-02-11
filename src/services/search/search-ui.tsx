@@ -71,10 +71,16 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
         const articleMaybe = state.curArticle;
 
         if (state.isArticleError) {
-            return <h2>There was an error getting this paper, try checking your internet connection</h2>;
+            return (
+                <div className="page">
+                    <h2>There was an error getting this paper, try checking your internet connection</h2>
+                </div>);
         }
         if (state.isFetchingArticle || !articleMaybe) {
-            return <h2>Loading Article...</h2>;
+            return (
+                <div className="page">
+                    <h2>Loading Article...</h2>
+                </div>);
         }
 
         const article = articleMaybe as Article;
@@ -88,7 +94,7 @@ export class ArticleView extends React.Component<RouteComponentProps<any>> {
             <div>
                 <div id="article" className="clear">
                     <div id="summary">
-                        <h1 id="title">{article.title}</h1>
+                        <h1 id="title" dangerouslySetInnerHTML={{__html: article.title}} />
                         <p className="published">Published {pubDate}</p>
                         <div className="description" dangerouslySetInnerHTML={{ __html: article.description }} />
 
@@ -176,16 +182,20 @@ export class SearchBar extends React.Component<RouteComponentProps<any>> {
         const query = Search.getState().query;
 
         const inputProps = {
-            className: 'search',
+            className: 'search form-control',
             type: 'text',
             placeholder: 'Find Research'
         };
 
         return (
-            <form className="clear" onSubmit={this.formSubmitted}>
-                <input {...inputProps} onChange={this.searchChanged} value={query} />
-                <button type="submit">Search</button>
-            </form>
+            <div className="form-group">
+                <form className="clear input-group" onSubmit={this.formSubmitted}>
+                    <input {...inputProps} onChange={this.searchChanged} value={query} type="text" />
+                    <span className="input-group-btn">
+                        <button className="btn btn-primary" type="submit">Search</button>
+                    </span>
+                </form>
+            </div>
         );
     }
 
@@ -214,7 +224,7 @@ const resultToView = (result: Result, history: History) => {
 
     return (
         <li>
-            <h2><a onClick={articleClicked(result.id, history)}>{title}</a></h2>
+            <h2><a onClick={articleClicked(result.id, history)} dangerouslySetInnerHTML={{__html: title}}/></h2>
             <p>Published {published}</p>
         </li>
     );
@@ -251,19 +261,28 @@ export class SearchResults extends React.Component<RouteComponentProps<any>> {
         const state = Search.getState();
 
         if (state.isQueryError) {
-            return <h2>There was an error searching, try checking your internet connection</h2>;
+            return (
+                <div className="page">
+                    <h2>There was an error searching, try checking your internet connection</h2>
+                </div>);
         }
         if (state.isQuerying) {
-            return <h2>Searching...</h2>;
+            return (
+                <div className="page">
+                    <h2>Searching...</h2>
+                </div>);
         }
         if (!state.results || state.results.length === 0) {
-            return <h2>No results</h2>;
+            return (
+                <div className="page">
+                    <h2>No results</h2>
+                </div>);
         }
 
         const resultViews = resultsToViews(state, this.history);
 
         return (
-            <div id="search">
+            <div id="search" className="page">
                 <div className="inline">
                     <Route component={SearchBar} />
                 </div>

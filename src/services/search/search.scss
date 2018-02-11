@@ -4,12 +4,29 @@
 }
 
 .main_search{
-    width: 320px;
+    max-width: 490px;
     margin: 40px auto;
+
+    input {
+        font-size: 32px;
+    }
+
+    .form-control{
+        height: 75px;
+    }
+
+    .btn{
+        padding: 23px 12px 20px;
+        font-size: 20px;
+    }
 }
 
-.main_search form{
-    width: 320px;
+.inline {
+    margin-left: 40px;
+
+    .input-group{
+        max-width: 280px;
+    }
 }
 
 .main_search form input, .main_search form button{
@@ -34,7 +51,7 @@
 }
 
 .cats a, .tags a, .files a, .authors a {
-    padding: 0 0 0 5px;
+    padding: 0 10px 0 0;
 }
 
 #summary{

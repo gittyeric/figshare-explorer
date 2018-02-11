@@ -15,19 +15,22 @@ import { RouteComponentProps } from 'react-router';
 const HomePage: React.SFC<RouteComponentProps<any>> = () => {
 
   return (
-    <div>
+    <div className="home">
+      <h1>Search For Research Whitepapers</h1>
       <div className="main_search">
         <Route component={SearchBar} />
       </div>
     </div>);
 };
 
+const FREQL_GIT = 'https://github.com/gittyeric/freql-recommendation-engine';
 const About = () => (
-  <div>
+  <div className="page">
     <h2>About</h2>
-    <p>So far, this site is mostly a demo site for the 
-      <a href="https://github.com/gittyeric/freql-recommendation-engine">FREQL Recommendation Engine</a> 
-      and also uses awesome <a href="https://docs.figshare.com">Figshare APIs</a> to help with research discovery.</p>
+    <p>So far, this is mostly a demo site for 
+      the <a href={FREQL_GIT} target="_blank">FREQL Recommendation Engine</a> and 
+      also uses awesome <a href="https://docs.figshare.com" target="_blank">Figshare APIs</a> to 
+      help with research discovery.</p>
   </div>
 );
 

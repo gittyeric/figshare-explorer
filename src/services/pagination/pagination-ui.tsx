@@ -23,10 +23,12 @@ export default class Pagination<RESULT> extends React.Component {
 
     pageClicked(newPage: number) {
         return (e: MouseEvent<HTMLAnchorElement>) => {
-            const promisedPage = this.pagable.paginate(newPage);
-            promisedPage.then((page) => {
-                this.forceUpdate();
-            });
+            if (newPage !== this.pagable.getPage().page) {
+                const promisedPage = this.pagable.paginate(newPage);
+                promisedPage.then((page) => {
+                    this.forceUpdate();
+                });
+            }
             return false;
         };
     }
@@ -49,10 +51,12 @@ export default class Pagination<RESULT> extends React.Component {
                 const iPage = firstVisible + i;
                 const className = 'num' + active;
 
-                pageElements.push(
-                    <li className={className}>
-                        <a onClick={this.pageClicked(iPage)}>{iPage}</a>
-                    </li>);
+                if (iPage <= page.page || isNextPage) {
+                    pageElements.push(
+                        <li className={className}>
+                            <a onClick={this.pageClicked(iPage)}>{iPage}</a>
+                        </li>);
+                }
             }
 
             return pageElements;
