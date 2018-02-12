@@ -21,6 +21,11 @@ export function asSearchProps(p: RouteComponentProps<any>, Search: SearchService
     return { ...p, search: Search };
 }
 
+const updateUrl = (history: History, state: SearchState) => {
+    const encodedQuery = encodeURI(state.query);
+    history.push('/search/' + state.page + '/' + encodedQuery);
+};
+
 type ChangeHandler = (event: ChangeEvent<HTMLInputElement>) => boolean;
 type SubmitHandler = (event: FormEvent<HTMLFormElement>) => boolean;
 // tslint:disable-next-line:no-any
@@ -45,9 +50,7 @@ export class SearchBar extends React.Component<SearchProps> {
 
         this.formSubmitted = (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            const encodedQuery = encodeURI(this.service.getState().query);
-            this.history.push('/search/' + encodedQuery);
-            this.service.find();
+            updateUrl(this.history, this.service.getState());
             return false;
         };
     }
@@ -121,13 +124,15 @@ export class SearchResults extends React.Component<SearchProps> {
         this.service = params.search;
         this.history = params.history;
         this.match = params.match;
-        this.service.setQuery(this.match.params.query);
-        this.service.find();
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        this.service.setQuery(this.match.params.query);
+        this.service.paginate(Number(this.match.params.page));
+        
         const instance = this;
         this.unlisten = this.service.listen(state => {
+            updateUrl(instance.history, instance.service.getState());
             instance.forceUpdate();
         });
     }

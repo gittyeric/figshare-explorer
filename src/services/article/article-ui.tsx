@@ -28,7 +28,7 @@ const filesToViews = (files: File[]) => {
 };
 
 const authorToView = (author: Author) => {
-    const authorUrl = '/search/' + encodeURI(':author: ' + author.full_name);
+    const authorUrl = '/search/1/' + encodeURI(':author: ' + author.full_name);
     return <a href={authorUrl}>{author.full_name}</a>;
 };
 
@@ -37,7 +37,7 @@ const authorsToViews = (authors: Author[]) => {
 };
 
 const categoryToView = (cat: Category) => {
-    const catUrl = '/search/' + encodeURI(':category: ' + cat.title);
+    const catUrl = '/search/1/' + encodeURI(':category: ' + cat.title);
     return <a href={catUrl}>{cat.title}</a>;
 };
 
@@ -46,7 +46,7 @@ const categoriesToViews = (cats: Category[]) => {
 };
 
 const tagToView = (tag: string) => {
-    const tagUrl = '/search/' + encodeURI(':tag: ' + tag);
+    const tagUrl = '/search/1/' + encodeURI(':tag: ' + tag);
     return <a href={tagUrl}>{tag}</a>;
 };
 

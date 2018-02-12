@@ -14,23 +14,11 @@ export interface Pagable<RESULT> {
 
 export default class Pagination<RESULT> extends React.Component {
 
-    pagable: Pagable<RESULT>;
+    protected pagable: Pagable<RESULT>;
 
     constructor(pagable: Pagable<RESULT>, props: {}) {
         super(props);
         this.pagable = pagable;
-    }
-
-    pageClicked(newPage: number) {
-        return (e: MouseEvent<HTMLAnchorElement>) => {
-            if (newPage !== this.pagable.getPage().page) {
-                const promisedPage = this.pagable.paginate(newPage);
-                promisedPage.then((page) => {
-                    this.forceUpdate();
-                });
-            }
-            return false;
-        };
     }
 
     render() {
@@ -70,4 +58,17 @@ export default class Pagination<RESULT> extends React.Component {
             </ul>
         );
     }
+
+    private pageClicked(newPage: number) {
+        return (e: MouseEvent<HTMLAnchorElement>) => {
+            if (newPage !== this.pagable.getPage().page) {
+                const promisedPage = this.pagable.paginate(newPage);
+                promisedPage.then((page) => {
+                    this.forceUpdate();
+                });
+            }
+            return false;
+        };
+    }
+    
 }

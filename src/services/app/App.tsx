@@ -58,7 +58,7 @@ const App = () => (
 
       <Route path="/" exact={true} render={(props) => (<Homepage {...SearchProps(props)} />)} />
       <Route path="/about" exact={true} component={About} />
-      <Route path="/search/:query" render={(props) => (<SearchResults {...SearchProps(props)} />)} />
+      <Route path="/search/:page/:query" render={(props) => (<SearchResults {...SearchProps(props)} />)} />
       <Route path="/article/:id" render={(props) => (<ArticleView {...ArticleProps(props)} />)} />
 
     </div>
