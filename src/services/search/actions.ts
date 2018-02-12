@@ -11,23 +11,6 @@ export interface SearchState extends Page<Result> {
     queryMatchesResults: boolean;
     query: string;
     results?: Array<Result>;
-
-    isFetchingArticle: boolean;
-    isArticleError: boolean;
-    curArticleId?: string;
-    curArticle?: Article;
-}
-
-export interface Article {
-    id: string;
-    title: string;
-    description: string;
-    categories: Category[];
-    tags: string[];
-    authors: Author[];
-    files: File[];
-    published_date: string;
-    figshare_url: string;
 }
 
 export interface Author {
@@ -62,10 +45,6 @@ enum ActionType {
     QueryDone = 'QueryDone',
     QueryFail = 'QueryFail',
     SetPage = 'SetPage',
-
-    ArticleLoading = 'ArticleLoading',
-    ArticleFail = 'ArticleFail',
-    ArticleDone = 'ArticleDone',
 }
 
 export interface SearchAction extends NamedAction {
@@ -132,39 +111,6 @@ export const Paginated = (page: number): PaginationAction => {
     };
 };
 
-interface ArticleLoadingAction extends SearchAction {
-    id: string;
-}
-
-export const ArticleLoading = (id: string): ArticleLoadingAction => {
-    return {
-        type: ActionType.ArticleLoading,
-        storeName: storeName,
-        id: id
-    };
-};
-
-interface ArticleFailAction extends SearchAction {}
-
-export const ArticleFail = (): ArticleFailAction => {
-    return {
-        type: ActionType.ArticleFail,
-        storeName: storeName
-    };
-};
-
-interface ArticleDoneAction extends SearchAction {
-    article: Article;
-}
-
-export const ArticleDone = (article: Article): ArticleDoneAction => {
-    return {
-        type: ActionType.ArticleDone,
-        storeName: storeName,
-        article: article
-    };
-};
-
 const queryChangedReducer = (s: SearchState, a: QueryChangedAction) => {
     return { ...s, query: a.query, queryMatchesResults: false };
 };
@@ -185,18 +131,6 @@ const paginationReducer = (s: SearchState, a: PaginationAction) => {
     return { ...s, page: a.page };
 };
 
-const articleLoadingReducer = (s: SearchState, a: ArticleLoadingAction) => {
-    return { ...s, isFetchingArticle: true, articleId: a.id };
-};
-
-const articleDoneReducer = (s: SearchState, a: ArticleDoneAction) => {
-    return { ...s, isFetchingArticle: false, isArticleError: false, curArticle: a.article };
-};
-
-const articleFailReducer = (s: SearchState) => {
-    return { ...s, isFetchingArticle: false, isArticleError: true, article: undefined };
-};
-
 export const reducer: NamedReducer<SearchState> = (s: SearchState, a: NamedAction): SearchState => {
     switch (a.type) {
         case ActionType.QueryChanged:
@@ -209,13 +143,7 @@ export const reducer: NamedReducer<SearchState> = (s: SearchState, a: NamedActio
             return queryFailReducer(s);
         case ActionType.SetPage:
             return paginationReducer(s, a as PaginationAction);
-        case ActionType.ArticleLoading:
-            return articleLoadingReducer(s, a as ArticleLoadingAction);
-        case ActionType.ArticleDone:
-            return articleDoneReducer(s, a as ArticleDoneAction);
-        case ActionType.ArticleFail:
-            return articleFailReducer(s);
-        default:
-            throw new Error('Unknown SearchAction: ' + a.type);
+       default:
+            throw new Error('Unknown ArticleAction: ' + a.type);
     }
 };

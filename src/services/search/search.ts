@@ -2,12 +2,9 @@ import * as $ from 'jquery';
 import { StatefulService } from '../stateful-service';
 import {
     SearchState, storeName, SearchAction, reducer, Result,
-    QueryDone, QueryFail, Article, ArticleFail,
-    ArticleDone, QueryLoading, ArticleLoading, QueryChanged
+    QueryDone, QueryFail, QueryLoading, QueryChanged
 } from './actions';
 import { Pagable } from '../pagination/pagination-ui';
-
-const FIGSHARE_API = 'https://api.figshare.com/v2';
 
 const initState: SearchState = {
     query: '',
@@ -16,15 +13,16 @@ const initState: SearchState = {
     queryMatchesResults: true,
     isQuerying: false,
     isQueryError: false,
-    isArticleError: false,
-    isFetchingArticle: false,
 };
 
-class SearchService extends StatefulService<SearchState, SearchAction>
+export default class SearchService extends StatefulService<SearchState, SearchAction>
     implements Pagable<Result> {
 
-    constructor() {
+    private apiPrefix: string;
+
+    constructor(apiPrefix: string) {
         super(storeName, reducer, initState);
+        this.apiPrefix = apiPrefix;
     }
 
     getPage = () => this.getState();
@@ -40,7 +38,7 @@ class SearchService extends StatefulService<SearchState, SearchAction>
         const state = this.getState();
 
         const pendingAjax = $.ajax({
-            url: FIGSHARE_API + '/articles/search',
+            url: this.apiPrefix + '/articles/search',
             method: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -68,31 +66,5 @@ class SearchService extends StatefulService<SearchState, SearchAction>
 
         return promisedResult;
     }
-
-    getArticle = (articleId: string) => {
-        const pendingAjax = $.ajax({
-            url: FIGSHARE_API + '/articles/' + articleId,
-            method: 'get'
-        });
-
-        this.dispatch(ArticleLoading(articleId));
-
-        const promisedResult = new Promise<Article>((resolve, reject) => {
-            pendingAjax.done(
-                (article) => {
-                    const asArticle = article as Article;
-                    this.dispatch(ArticleDone(asArticle));
-                    resolve(asArticle);
-                })
-                .fail((e) => {
-                    this.dispatch(ArticleFail());
-                    reject(e);
-                });
-        });
-
-        return promisedResult;
-    }
-
+    
 }
-
-export const Search = new SearchService();

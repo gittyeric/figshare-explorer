@@ -1,4 +1,7 @@
 {
+  "rules": {
+    "no-any": false
+  },
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "build/dist",

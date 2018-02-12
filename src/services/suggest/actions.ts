@@ -13,12 +13,17 @@ export enum ItemType {
 }
 
 export interface Suggestions {
-    scores: Score[];
+    scores: LinkedScore[];
 }
 
 export interface Score {
     id: string;
     score: number;
+}
+
+export interface LinkedScore extends Score {
+    name: string;
+    link: string;
 }
 
 export interface ItemTypeState {

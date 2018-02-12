@@ -71,7 +71,3 @@ export default class Pagination<RESULT> extends React.Component {
         );
     }
 }
-
-/*export default function createPagination<PAGE>(pagable: Pagable<PAGE>): Pagination<PAGE> {
-    return new Pagination(pagable);
-}*/

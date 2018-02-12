@@ -17,7 +17,7 @@ export class StatefulService<STATE, ACTION_BASE extends NamedAction> {
     }
     
     listen = (listener: (s: STATE) => void) => {
-        this.store.subscribe(listener);
+        return this.store.subscribe(listener);
     }
 
 }
