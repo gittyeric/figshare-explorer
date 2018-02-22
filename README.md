@@ -1,6 +1,6 @@
 # Figshare Explorer
 
-This app is running at [papersearch.org]("https://papersearch.org") which lets you search the [Figshare API]("https://figshare.com") along with whitepaper recommendations from a [FREQL]("https://github.com/gittyeric/freql-recommendation-engine") recommendation engine.
+This app is running at [papersearch.org](https://papersearch.org) which lets you search the [Figshare API](https://figshare.com) along with whitepaper recommendations from a [FREQL](https://github.com/gittyeric/freql-recommendation-engine) recommendation engine.
 
 ## Installing and Running
 
